@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #6A0DAD;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: #fff; /* White color for navbar links */
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #f370a1;
+            transition: background-color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #ffb6c1;
+        }
+        .website-logo {
+            width: 100px;
+            height: 60px;
+        }
+        .navbar-buttons {
+            margin-right: 20px;
+        }
+        .login-buttons a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #f370a1;
+            transition: background-color 0.3s;
+        }
+        .login-buttons a:hover {
+            background-color: #ffb6c1;
+        }
+        .container {
+            max-width: 800px;
+            margin: 100px auto; /* Center the container vertically */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Add space above the table */
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        @media screen and (max-width: 600px) {
+            .container {
+                margin: 20px auto; /* Adjust margin for smaller screens */
+                margin-top: 20px;
+            }
+            table {
+                margin-top: 80px; /* Increase margin-top for smaller screens */
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <div class="navbar-buttons">
+        <ul>
+            <li>
+                 <a href="{% url 'ashaworker_dashboard' %}" class="login-buttons">Main Menu</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <table border="1">
+      <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Link</th>
+      </tr>
+        {% for info in data %}
+      <tr>
+        <td>{{ info.0 }}</td>
+        <td>{{ info.7 }}</td>
+        <td>{{ info.8 }}</td>
+          {% if info.9 == '1' %}
+          <td>10:00 to 10:30</td>
+          {% elif info.9 == '2' %}
+          <td>10:30 to 11:00</td>
+          {% elif info.9 == '3' %}
+          <td>11:00 to 11:30</td>
+          {% elif info.9 == '4' %}
+          <td>11:30 to 12:00</td>
+          {% elif info.9 == '5' %}
+          <td>12:00 to 12:30</td>
+          {% elif info.9 == '6' %}
+          <td>12:30 to 01:00</td>
+          {% elif info.9 == '7' %}
+          <td>01:00 to 01:30</td>
+          {% elif info.9 == '8' %}
+          <td>01:30 to 02:00</td>
+          {% elif info.9 == '9' %}
+          <td>02:00 to 02:30</td>
+          {% elif info.9 == '10' %}
+          <td>02:30 to 03:00</td>
+          {% elif info.9 == '11' %}0
+          <td>03:00 to 03:30</td>
+          {% elif info.9 == '12' %}
+          <td>03:30 to 04:00</td>
+          {% elif info.9 == '13' %}
+          <td>04:00 to 04:30</td>
+          {% elif info.9 == '14' %}
+          <td>04:30 to 05:00</td>
+          {% endif %}
+          <td><a href="{{ link }}">link</a></td>
+      </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
+
+

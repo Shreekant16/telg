@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #6A0DAD;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999; /* Ensure navbar stays on top */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #fff; /* White color for navbar links */
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #f370a1;
+            transition: background-color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #ffb6c1;
+        }
+        .website-logo {
+            width: 80px;
+            height: auto;
+            position: absolute;
+            bottom: 1px;
+        }
+        .container {
+            max-width: 800px; /* Adjusted max-width for responsiveness */
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex; /* Change display property to flex */
+            justify-content: center; /* Center the items horizontally */
+            flex-wrap: wrap; /* Allow items to wrap if they exceed the container's width */
+        }
+
+        .box {
+            margin: 10px; /* Add margin to create space between the boxes */
+        }
+
+        h2 {
+            text-align: center;
+        }
+        .navbar-buttons {
+            float: right;
+            margin-right: 20px;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            color: #ffb6c1;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .box {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #CBC3E3;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    /* Adjust width to fit two boxes in a row */
+    width: calc(50% - 20px); /* Subtracting margin from width to prevent overflow */
+    /* Adjust height of the boxes */
+    height: 200px;
+    box-sizing: border-box; /* Include padding and border in the total width */
+    flex-grow: 1; /* Allow boxes to grow and fill the space equally */
+}
+
+<!--        .box {-->
+<!--            margin-top: 20px;-->
+<!--            padding: 20px;-->
+<!--            background-color: #CBC3E3;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 8px;-->
+<!--            text-align: center; /* Align text to the center */-->
+<!--            width: 300px;-->
+<!--            height: 200px;-->
+<!--        }-->
+
+        .pink-link {
+            color: black;
+            text-decoration: none;
+            margin-right: 10px;
+            font-family: cursives; /* Change to the desired font */
+            font-size: 15px; /* Change to the desired font size */
+        }
+
+
+        @media screen and (max-width: 768px) {
+            .container {
+                max-width: 90%; /* Adjusted max-width for smaller screens */
+            }
+        }
+
+        /* Added class for hiding and showing menu sections */
+        .hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .shown {
+            max-height: 1000px; /* Adjust this value based on your content */
+            overflow: hidden;
+            transition: max-height 0.3s ease-in;
+        }
+
+        .menu-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1s ease-out;
+        }
+
+        .menu-section.shown {
+            max-height: 1000px; /* Adjust this value based on your content */
+            overflow: hidden;
+            transition: max-height 2s ease-in;
+        }
+
+        .login-buttons a {
+            text-decoration: none;
+            color: #333; /* Adjust as needed for readability */
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f8f9fa; /* Very light gray for button background */
+            transition: background-color 0.3s;
+        }
+
+        .login-buttons a:hover {
+            background-color: #e9ecef; /* Light gray on hover */
+        }
+        .calendar-container {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .flash-message-container {
+            position: fixed; /* Fixed positioning to keep it centered even when scrolling */
+            top: 300px; /* Move the container 20px from the top */
+            left: 0; /* Align at the left of the viewport */
+            width: 100%; /* Full width */
+            z-index: 9999; /* Ensure it's on top of other content */
+            display: flex;
+            justify-content: center;
+        }
+
+        .flash-message {
+            background-color: #f370a1; /* Green background */
+            color: white; /* White text color */
+            text-align: center; /* Center-align text */
+            padding: 10px; /* Add padding */
+            margin-bottom: 20px; /* Add some space below the message */
+            border-radius: 5px; /* Add rounded corners */
+        }
+
+        .flash-message-content {
+            margin-bottom: 5px; /* Add some space between messages */
+        }
+        @media screen and (max-width: 320px) {
+            .box p{
+                font-size: 15px;
+<!--                text-align: justify;-->
+            }
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <div style="position: absolute; right: 120px; color: white;">
+        Welcome, {{ doctor_name }} !
+    </div>
+    <ul>
+        <li>
+            <a href="{% url 'home' %}" class="logout-btn">Logout</a>
+        </li>
+    </ul>
+</div>
+{% if messages %}
+    <div id="flash-message-container" class="flash-message-container">
+        <div id="flash-message" class="flash-message">
+            {% for message in messages %}
+                <div class="flash-message-content">{{ message }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+<div class="container">
+    <div class="box">
+        <a class="pink-link" href="{% url 'doctor_todays_patient' %}" style="font-size: 20px;">
+            <img src="{% static 'images/amm.png' %}" style="width: 100px; height: 100px;"><br>
+            <p>Appointments</p>
+        </a>
+    </div>
+<!--    doctor_todays_patient-->
+    <div class="box">
+        <a class="pink-link" href="{% url 'doctor_timeslot' %}" style="font-size: 20px;">
+            <img src="{% static 'images/ts.png' %}" style="width: 100px; height: 100px;"><br>
+            <p>Select Time Slots</p>
+        </a>
+    </div>
+    <div class="box">
+        <a class="pink-link" href="{% url 'patient_history' %}" style="font-size: 20px;">
+            <img src="{% static 'images/ph.png' %}" style="width: 100px; height: 100px;"><br>
+            <p>Patient History</p>
+        </a>
+    </div>
+
+</div>
+<script>
+    // Function to handle flash message
+    function handleFlashMessage() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            // Show the flash message
+            flashMessage.style.display = 'block';
+            // Hide the flash message after 2 seconds
+            setTimeout(function() {
+                flashMessage.style.display = 'none';
+            }, 2000);
+        }
+    }
+
+    // Call the function when the page loads
+    window.onload = handleFlashMessage;
+</script>
+</body>
+</html>
+<!-- enter mc length 25 - 35 days -->
+<!-- avg enter period length 1 - 11 days -->
+
+<!-- follicular phase 6 days -->
+<!-- ovulation phase 5 days -->
+
+

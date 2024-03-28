@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parameter Input Form</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  .website-logo {
+            float: left;
+            margin-left: 50px;
+        }
+
+        .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+  h2 {
+    margin-bottom: 20px;
+  }
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  .result-box {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+</style>
+<script>
+function validateForm() {
+    var fsh = parseFloat(document.getElementById('fsh').value);
+    var lh = parseFloat(document.getElementById('lh').value);
+    var glucose_fasting = parseFloat(document.getElementById('glucose_fasting').value);
+    var glucose_pp = parseFloat(document.getElementById('glucose_pp').value);
+    var insulin_fasting = parseFloat(document.getElementById('insulin_fasting').value);
+    var insulin_pp = parseFloat(document.getElementById('insulin_pp').value);
+    var prolactin = parseFloat(document.getElementById('prolactin').value);
+    var testosterone = parseFloat(document.getElementById('testosterone').value);
+    var t3 = parseFloat(document.getElementById('t3').value);
+    var t4 = parseFloat(document.getElementById('t4').value);
+    var tsh = parseFloat(document.getElementById('tsh').value);
+
+    if (fsh < 0.1 || fsh > 100 || isNaN(fsh)) {
+        alert("FSH value must be between 0.1 and 100.");
+        return false;
+    }
+
+    if (lh < 6.5 || lh > 101 || isNaN(lh)) {
+        alert("LH value must be between 6.5 and 101.");
+        return false;
+    }
+
+    if (glucose_fasting < 54 || glucose_fasting > 500 || isNaN(glucose_fasting)) {
+        alert("Glucose (Fasting) value must be between 54 and 126.");
+        return false;
+    }
+
+    if (glucose_pp < 90 || glucose_pp > 700 || isNaN(glucose_pp)) {
+        alert("Glucose (Postprandial) value must be between 90 and 700.");
+        return false;
+    }
+
+    if (insulin_fasting < 1 || insulin_fasting > 50 || isNaN(insulin_fasting)) {
+        alert("Insulin (Fasting) value must be between 1 and 50.");
+        return false;
+    }
+
+    if (insulin_pp < 1 || insulin_pp > 100 || isNaN(insulin_pp)) {
+        alert("Insulin (Postprandial) value must be between 1 and 100.");
+        return false;
+    }
+
+    if (prolactin < 1 || prolactin > 80 || isNaN(prolactin)) {
+        alert("Prolactin value must be between 1 and 80.");
+        return false;
+    }
+
+    if (testosterone < 5 || testosterone > 150 || isNaN(testosterone)) {
+        alert("Testosterone value must be between 5 and 150.");
+        return false;
+    }
+
+    if (t3 < 0.1 || t3 > 7 || isNaN(t3)) {
+        alert("T3 value must be between 0.1 and 7.");
+        return false;
+    }
+
+    if (t4 < 40 || t4 > 200 || isNaN(t4)) {
+        alert("T4 value must be between 40 and 200.");
+        return false;
+    }
+
+    if (tsh < 0.1 || tsh > 10 || isNaN(tsh)) {
+        alert("TSH value must be between 0.1 and 10.");
+        return false;
+    }
+
+    return true;
+}
+</script>
+
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+</div>
+<br><br><br>
+  <h2 style="text-align: center;">Parameter Input Form</h2>
+  <form action="{% url 'prediction_input' %}" method="post" onsubmit="return validateForm()">
+    {% csrf_token %}
+    <label for="age">Age:</label>
+    <input type="text" id="age" name="age">
+
+    <label for="fsh">FOLLICLE STIMULATING HORMONE (FSH):</label>
+    <input type="text" id="fsh" name="fsh">
+
+    <label for="lh">LUTEINIZING HORMONE (LH):</label>
+    <input type="text" id="lh" name="lh">
+
+    <label for="glucose_fasting">Glucose (Fasting):</label>
+    <input type="text" id="glucose_fasting" name="glucose_fasting">
+
+    <label for="glucose_pp">Glucose (Postprandial):</label>
+    <input type="text" id="glucose_pp" name="glucose_pp">
+
+    <label for="insulin_fasting">Insulin (Fasting):</label>
+    <input type="text" id="insulin_fasting" name="insulin_fasting">
+
+    <label for="insulin_pp">Insulin (Postprandial):</label>
+    <input type="text" id="insulin_pp" name="insulin_pp">
+
+    <label for="prolactin">Prolactin:</label>
+    <input type="text" id="prolactin" name="prolactin">
+
+    <label for="testosterone">Testosterone:</label>
+    <input type="text" id="testosterone" name="testosterone">
+
+    <label for="t3">TRIIODOTHYRONINE 3 (T3):</label>
+    <input type="text" id="t3" name="t3">
+
+    <label for="t4">Thyroxine 4 (T4):</label>
+    <input type="text" id="t4" name="t4">
+
+    <label for="tsh">Thyroid Stimulating Hormone (TSH):</label>
+    <input type="text" id="tsh" name="tsh">
+
+    <input type="submit" value="Submit">
+  </form>
+
+</body>
+</html>

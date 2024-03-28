@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashaworker Dashboard</title>
+    <style>
+        /* Navbar styles */
+.navbar {
+    background-color: #6A0DAD;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #f370a1;
+    transition: background-color 0.3s;
+}
+
+.navbar ul li a:hover {
+    background-color: #FFB6C1;
+}
+
+.website-logo {
+    width: 80px;
+    height: auto;
+    margin-left: 20px;
+}
+
+/* Box styles */
+.box {
+    margin-top: 100px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+/* Form styles */
+.box form {
+    margin-bottom: 20px;
+}
+
+.box label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.box select, .box button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.box button {
+    background-color: #f370a1;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.box button:hover {
+    background-color: #FFB6C1;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo" style="width: 100px; height: 60px;">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'ashaworker_dashboard' %}" class="logout-btn">Main Menu</a></li>
+    </ul>
+</div>
+<br><br><br>
+<h1 style="text-align: center;">Ashaworker Dashboard</h1>
+<div class="box">
+    <form method="post">
+        {% csrf_token %}
+        <label for="patient-dropdown">Select Patient:</label>
+        <select id="patient-dropdown" name="patient">
+            <option value="">-- Select Patient --</option>
+            {% for patient in data %}
+                <option value="{{ patient }}">{{ patient }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Get Details</button>
+    </form>
+    <br>
+    <br>
+    <div>
+        <p><strong>Name: </strong>{{ patient_details.0 }}</p>
+        <p><strong>Age: </strong> {{ patient_details.2 }}</p>
+        <p><strong>Height: </strong>{{ patient_details.3 }}feet</p>
+        <p><strong>Weight: </strong> {{ patient_details.4 }} kg</p>
+        <p><strong>Problem Suffering : </strong> {{ patient_details.5 }}</p>
+        <p><strong>Additional Problem : </strong> {{ patient_details.6 }}</p>
+        <p><strong>Requested TimeSlot : </strong>
+            {% if patient_details.10 == '1' %}
+            10:00 to 10:30
+            {% elif patient_details.10 == '2' %}
+            10:30 to 11:00
+            {% elif patient_details.10 == '3' %}
+            11:00 to 11:30
+            {% elif patient_details.10 == '4' %}
+            11:30 to 12:00
+            {% elif patient_details.10 == '5' %}
+            12:00 to 12:30
+            {% elif patient_details.10 == '6' %}
+            12:30 to 01:00
+            {% elif patient_details.10 == '7' %}
+            01:00 to 01:30
+            {% elif patient_details.10 == '8' %}
+            01:30 to 02:00
+            {% elif patient_details.10 == '9' %}
+            02:00 to 02:30
+            {% elif patient_details.10 == '10' %}
+            02:30 to 03:00
+            {% elif patient_details.10 == '11' %}
+            03:00 to 03:30
+            {% elif patient_details.10 == '12' %}
+            03:30 to 04:00
+            {% elif patient_details.10 == '13' %}
+            04:00 to 04:30
+            {% elif patient_details.10 == '14' %}
+            04:30 to 04:00
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+
+
+
+<div class="box">
+    <form method="post" action="{% url 'ashaworker_is_booking_appointment' %}?patient={{ patient_details.0 }}&problem={{ patient_details.5 }}&additional_problem={{ patient_details.6 }}&time=tomorrow">
+        {% csrf_token %}
+        <h2>Doctor's Available tomorrow</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Time</th>
+                <th>Available Doctors</th>
+            </tr>
+            </thead>
+            <tbody id="time-slots-body">
+
+            <tr>
+                <td>10:00 to 10:30</td>
+                    <td>
+                        {% for slot in doctor_calendar %}
+                            {% if slot.1 == 'no' %}
+                                <button class="doctor-btn" type="submit" value="{{ slot.0 }}1" name="doctor">{{ slot.0 }}</button>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+            </tr>
+
+            <tr>
+                <td>10:30 to 11:00</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.2 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}2" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>11:00 to 11:30</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.3 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}3" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>11:30 to 12:00</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.4 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}4" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>12:00 to 12:30</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.5 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}5" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>12:30 to 01:00</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.6 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}6" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>01:00 to 01:30</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.7 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}7" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>01:30 to 02:00</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.8 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}8" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>02:00 to 02:30</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.9 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}9" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>02:30 to 03:00</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.10 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}t" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>03:00 to 03:30</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.11 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}e" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>03:30 to 04:00</td> <td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.12 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}v" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>04:00 to 04:30</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.13 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}h" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>04:30 to 05:00</td><td>
+                {% for slot in doctor_calendar %}
+
+                    {% if slot.14 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}o" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<div class="box">
+    <form method="post" action="{% url 'ashaworker_is_booking_appointment1' %}?patient={{ patient_details.0 }}&problem={{ patient_details.5 }}&additional_problem={{ patient_details.6 }}&time=today">
+    {% csrf_token %}
+    <h2>Doctor's Available today</h2>
+    <table>
+            <thead>
+            <tr>
+                <th>Time</th>
+                <th>Available Doctors</th>
+            </tr>
+            </thead>
+            <tbody id="time-slots-bod">
+
+            <tr>
+                <td>10:00 to 10:30</td> <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.1 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}1" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}   </td>
+            </tr>
+
+
+
+            <tr>
+                <td>10:30 to 11:00</td> <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.2 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}2" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>11:00 to 11:30</td>  <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.3 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}3" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %} </td>
+            </tr>
+
+
+
+            <tr>
+                <td>11:30 to 12:00</td> <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.4 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}4" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}  </td>
+            </tr>
+
+
+
+            <tr>
+                <td>12:00 to 12:30</td>  <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.5 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}5" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>12:30 to 01:00</td>  <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.6 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}6" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>01:00 to 01:30</td><td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.7 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}7" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>01:30 to 02:00</td> <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.8 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}8" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}   </td>
+            </tr>
+
+
+
+            <tr>
+                <td>02:00 to 02:30</td>  <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.9 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}9" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}  </td>
+            </tr>
+
+
+
+            <tr>
+                <td>02:30 to 03:00</td>    <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.10 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}t" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %} </td>
+
+            </tr>
+
+
+            <tr>
+                <td>03:00 to 03:30</td>  <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.11 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}e" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>03:30 to 04:00</td>  <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.12 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}v" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %}   </td>
+            </tr>
+
+
+
+            <tr>
+                <td>04:00 to 04:30</td>    <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.13 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}h" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %} </td>
+            </tr>
+
+
+
+            <tr>
+                <td>04:30 to 05:00</td>   <td>
+                {% for slot in today_available_doctor %}
+
+                    {% if slot.14 == 'no' %}
+                        <button class="doctor-btn" type="submit" value="{{ slot.0 }}o" name="doctor">{{ slot.0 }}</button>
+                    {% endif %}
+
+                {% endfor %} </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<!-- Profile Modal -->
+<div id="profile-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p>User Profile</p>
+        <p>Name: John Doe</p>
+        <p>Email: johndoe@example.com</p>
+        <p>Role: Doctor</p>
+        <P>Link: <a>Link</a></P>
+    </div>
+</div>
+
+<script>
+    // Open the profile modal
+    function openModal() {
+        document.getElementById("profile-modal").style.display = "block";
+    }
+
+    // Close the profile modal
+    function closeModal() {
+        document.getElementById("profile-modal").style.display = "none";
+    }
+</script>
+</body>
+</html>

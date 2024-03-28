@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 80px; /* Add margin to push content below navbar */
+        margin-bottom: 50px; /* Add margin for footer */
+    }
+
+    .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+
+    .curvy-box {
+        width: 1400px;
+        height: 500px;
+        margin: 0 auto 20px; /* Add margin at the bottom */
+        padding: 50px;
+        border-radius: 15px; /* Curvy border */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        background-color: #CBC3E3; /* Background color */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .footer {
+        background-color: #6A0DAD; /* Dark background color for the footer */
+        height: 20px;
+        color: black; /* White text color */
+        padding: 20px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: #ffff;
+    }
+    .curvy-box-text {
+        max-width: 60%; /* Adjust text width */
+        margin-left: 400px;
+    }
+
+    .curvy-box-text h2 {
+        margin-top: 0;
+    }
+
+   .curvy-box-photo img {
+        width: 800px; /* Increase the maximum width */
+        max-height: 500px; /* Adjust the maximum height proportionally */
+        border-radius: 10px; /* Rounded corners */
+        position: absolute;
+        left: 710px;
+        bottom: 64px;
+    }
+    .top{
+    margin-right: 450px;
+    color: #ffff;
+    }
+
+
+
+    /* Default text styles */
+.default-text {
+    display: block; /* Default to block display */
+}
+
+/* Responsive text styles */
+.responsive-text {
+    display: none; /* Hide by default */
+}
+
+/* Default image styles */
+.curvy-box-photo img {
+    display: relative; /* Display by default */
+}
+.curvy-box-photo p{
+display: none;
+}
+    /* Default styles for curvy box */
+.curvy-box {
+    width: 1400px; /* Default width */
+    height: 500px;
+    margin: 0 auto 20px; /* Add margin at the bottom */
+    padding: 50px;
+    border-radius: 15px; /* Curvy border */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    background-color: #CBC3E3; /* Background color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.button-wrapper {
+  position: relative;
+}
+    /* Default styles for curvy box */
+.curvy-box1 {
+    width: 1400px; /* Default width */
+    height: 500px;
+    margin: 0 auto 20px; /* Add margin at the bottom */
+    padding: 50px;
+    border-radius: 15px; /* Curvy border */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    background-color: #CBC3E3; /* Background color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.about-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 30px; /* Adjust the value to control the roundness */
+  background-color: #6A0DAD; /* Set the background color */
+  color: #ffffff; /* Set the text color */
+  text-decoration: none; /* Remove underline from the link */
+  transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+}
+
+.about-button:hover {
+  background-color: #8c33d1; /* Change background color on hover */
+}
+.responsive{
+  display: none;
+}
+
+
+
+@media screen and (max-width: 1400px) {
+    .curvy-box {
+        width: 100%; /* Adjusted width for smaller screens */
+    }
+}
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 800px) {
+    .navbar h1 {
+        display: none;
+    }
+    .curvy-box p {
+        display: none;
+    }
+    .curvy-box, .curvy-box1 {
+        display: none;
+    }
+    .responsive {
+        display: block;
+    }
+    body {
+        background-color: #CBC3E3; /* Change background color of body */
+    }
+}
+
+/* Adjustments for screens with width up to 320px */
+@media screen and (max-width: 320px) {
+    .navbar h1 {
+        display: none;
+    }
+    .curvy-box p {
+        display: none;
+    }
+    .curvy-box, .curvy-box1 {
+        display: none;
+    }
+    .responsive {
+        display: block;
+    }
+    body {
+        background-color: #CBC3E3; /* Change background color of body */
+    }
+    .about-button{
+        margin-left: 100px;
+    }
+    .default-text{
+        margin-right: 50px;
+    }
+    .responsive img{
+        margin-left: 150px;
+        margin-top: 50px;
+    }
+    .responsive ul{
+        margin-right: 50px;
+        margin-top: 60px;
+        font-size: 20px;
+    }
+    .contact-button{
+        margin-right: 50px;
+        padding: 10px 20px;
+        border-radius: 30px; /* Adjust the value to control the roundness */
+      background-color: #6A0DAD; /* Set the background color */
+      color: #ffffff; /* Set the text color */
+      text-decoration: none; /* Remove underline from the link */
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+    }
+}
+
+
+
+
+
+</style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <h1 class="top" style="font-family: 'Times New Roman', Times, serif;, serif; font-size: 32px; color: #ffff; position: absolute; left: 130px;">Telegynaec: For Monitoring Women's Health</h1>
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'login_user' %}" class="login-buttons">Login</a></li>
+        <li><a href="{% url 'registration' %}" class="login-buttons">Registration</a></li>
+    </ul>
+</div>
+
+<div class="curvy-box">
+
+    <div class="button-wrapper" style="margin-top: 50px;">
+      <a class="about-button" href="#">About Us</a>
+    </div>
+
+    <div style="position: relative; top: 30px; right: 350px;">
+    <p class="default-text" style="font-family: Arial, sans-serif; font-size: 18px; max-width:500px; text-align: justify;">This is a pioneering collaboration with ASHA workers,
+        revolutionizing women's healthcare access. With advanced
+        Machine Learning technology, TeleGynaec enables remote prediction
+        of PCOD/PCOS, bridging geographical gaps in healthcare. Our mission
+        is to achieve universal health coverage by providing quick virtual
+        access to gynecologists. Join us in reshaping women's
+        health for a brighter future.</p>
+    </div>
+
+    <div class="curvy-box-photo">
+        <img src="{% static 'images/firstpg.png' %}" alt="homepage" class="homepage">
+    </div>
+
+</div>
+
+<div class="curvy-box1" style="height: 300px;">
+    <div style="position: relative; float: left;">
+        <img src="{% static 'images/contact.png' %}" alt="Contact Photo" style="position: relative; left: -20px; top: 35px;">
+    </div>
+
+    <div style="position: relative; float: left; margin-left: 10px;" class="c">
+        <h2 style="color: #8B008B; font-family: 'Times New Roman', Times, serif; font-size: 40px;">Contact Us</h2>
+        <p style="font-family: 'Times New Roman', Times, serif font-size: 18px;">For any Queries. You can reach us at:</p>
+        <ul style="font-family: 'Times New Roman', Times, serif font-size: 18px; list-style-type: none; padding-left: 0;">
+            <li>Email: telegynaec@gmail.com</li>
+<!--            <li>Phone: +123456789</li>-->
+<!--            <li>Address: 123 Street, City, Countrys</li>-->
+        </ul>
+    </div>
+</div>
+
+
+
+<div class="responsive">
+    <div class="button-wrapper" style="margin-top: 100px;">
+      <a class="about-button" href="#">About Us</a>
+    </div>
+
+    <div style="position: relative; top: 20px; left: 40px; width:400px;">
+    <p class="default-text" style="font-family: Arial, sans-serif; font-size: 18px; max-width:500px; text-align: justify;">This is a pioneering collaboration with ASHA workers,
+        revolutionizing women's healthcare access. With advanced
+        Machine Learning technology, TeleGynaec enables remote prediction
+        of PCOD/PCOS, bridging geographical gaps in healthcare. Our mission
+        is to achieve universal health coverage by providing quick virtual
+        access to gynecologists. Join us in reshaping women's
+        health for a brighter future.</p>
+        <br><br><br>
+        <div class="button-wrapper" style="margin-top: 120px;">
+          <a class="contact-button" href="#">Contact Us</a>
+        </div>
+            <ul style="font-family: 'Times New Roman', Times, serif font-size: 18px; list-style-type: none; padding-left: 0;">
+                <li>Email: telegynaec@gmail.com</li>
+<!--                <li>Phone: +123456789</li>-->
+<!--                <li>Address: 123 Street, City, Country</li>-->
+            </ul>
+    </div>
+
+    <div class="curvy-box-photo" style="position: absolute; right: 1150px; top:600px;">
+        <img src="{% static 'images/firstpg.png' %}" alt="homepage" class="homepage" style="width: 350px; height: 150px; border-radius: 50%;">
+    </div>
+
+
+
+</div>
+
+
+<div class="footer">
+<!--    <p>&copy; 2024 TeleGynaec. All rights reserved.</p>-->
+    <p>TeleGynaec Major Project</p>
+</div>
+
+
+</body>
+</html>

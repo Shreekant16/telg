@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background-color: #6A0DAD;
+      padding: 5px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+    .navbar ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: #f370a1;
+      transition: background-color 0.3s;
+    }
+    .navbar ul li a:hover {
+      background-color: #FFB6C1;
+    }
+    .website-logo {
+      width: 80px;
+      height: auto;
+      margin-left: 50px;
+    }
+    .container {
+      max-width: 100%;
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow-x: auto; /* Enable horizontal scrolling for small screens */
+    }
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+      font-size: 14px; /* Adjust font size for small screens */
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'doctor_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+
+<div class="container">
+  <h1>Today's Patients</h1>
+  <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>AshaWorker</th>
+          <th>Problem</th>
+          <th>Time</th>
+          <th>Prescription</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for info in data %}
+        <tr>
+          <td>{{ info.0 }}</td>
+          <td>{{ info.1 }}</td>
+          <td>{{ info.5 }}</td>
+          <td>{{ info.9 }}</td>
+          <td><a href="{% url 'send_prescription' %}?patient={{ info.0 }}">Generate Prescription</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="container">
+  <h1>Tomorrow's Patients</h1>
+  <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>AshaWorker</th>
+          <th>Problem</th>
+          <th>Time</th>
+          <th>Prescription</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for info in tomorrow_appointment %}
+        <tr>
+          <td>{{ info.0 }}</td>
+          <td>{{ info.1 }}</td>
+          <td>{{ info.5 }}</td>
+          <td>{{ info.9 }}</td>
+          <td><a href="{% url 'send_prescription' %}?patient={{ info.0 }}">Generate Prescription</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

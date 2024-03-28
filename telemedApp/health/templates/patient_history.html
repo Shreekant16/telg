@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9; /* Light gray background */
+        }
+        .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+        position: absolute;
+        top: 25px;
+        left: 1400px;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+        a {
+            text-decoration: none;
+            color: #ffb6c1; /* Pink link color */
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button[type="submit"] {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #f370a1; /* Darker pink on hover */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+
+            background-color: #ffb6c1; /* Pink background */
+        }
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .table-box {
+            border: 1px solid #ffb6c1; /* Pink border */
+            border-radius: 8px; /* Rounded corners */
+            padding: 20px; /* Padding inside the box */
+            background-color: white; /* White background */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ffb6c1; /* Pink border */
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f370a1; /* Darker pink on hover */
+            color: white; /* White text for header */
+        }
+        @media screen and (max-width: 800px) {
+            .navbar ul li a{
+                position: absolute;
+                top: 25px;
+                left: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'doctor_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+
+<form method="post" style="margin-top: 100px; text-align: center;">
+    {% csrf_token %}
+    <input type="text" name="patient" placeholder="Enter Patient Name" style="margin-right: 10px;">
+    <button type="submit">Get Details</button>
+</form>
+
+
+    <h2>Patient History</h2>
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Problem</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in data %}
+                <tr>
+                    <td>{{ patient.1 }}</td>
+                    <td>{{ patient.2 }}</td>
+                    <td>{{ patient.3 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

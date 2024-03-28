@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Predictive Analysis</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin-top: 100px;
+        padding: 20px;
+        border-radius: 15px; /* Curvy border */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        background-color: #f9f9f9; /* Background color */
+        position: absolute;
+        left: 350px;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    h3 {
+        margin-top: 20px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    ul {
+        text-align: left;
+    }
+
+    form {
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .next-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove underline */
+    }
+
+    .next-button:hover {
+        background-color: #45a049;
+    }
+
+    @media screen and (max-width: 600px) {
+        .container {
+            width: 90%;
+            position: absolute;
+            right: auto; /* Reset right property */
+            left: 1%; /* Move the container to the le
+        }
+
+        .container p,
+        .container ul,
+        .container form {
+            font-size: 90%;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+<!--    <ul class="navbar-buttons">-->
+<!--        <li><a href="{% url 'user_dashboard' %}" class="login-buttons">Main Menu</a></li>-->
+<!--    </ul>-->
+</div>
+<div class="container">
+    <h2>Blood Test Guide</h2>
+    <p>This guide helps you get a blood test at a nearby pathology centre to check hormone levels and other health markers. The blood test should be testing the following parameters:</p>
+    <ul>
+        <li>Hormones (FSH, LH, Prolactin, Testosterone)</li>
+        <li>Thyroid Function (T3, T4, TSH)</li>
+        <li>Blood Sugar (Fasting & After Eating)</li>
+        <li>Insulin (Fasting & After Eating)</li>
+    </ul>
+
+    <h3>Before You Go:</h3>
+    <p>[IMPORTANT NOTE: These tests should be done during the follicular phase and in non-pregnant condition]
+To check whether you are in Follicular phase Refer the menstrual tracking feature in our application.</p>
+<!--    <a href="{% url 'prediction_input' %}" class="next-button">Next</a>-->
+    <ul>
+        <li>Fasting: Avoid food or sugary drinks for at least 8 hours before the test (water is okay).</li>
+        <li>Medications: Let the lab know if you take any medications.</li>
+    </ul>
+
+    <h3>Finding a Pathology Center:</h3>
+    <p>Search online: Look for "pathology centres near me".</p>
+
+    <p>After getting your reports – Click <a href="{% url 'prediction_input' %}" class="next-button">Next</a> and enter all the parameters in the list of questions that you see. Then based on the parameters entered by you, we will predict if you are facing any PCOD or PCOS related problem or not, and give suggestions regarding the same.</p>
+
+</div>
+
+</body>
+</html>

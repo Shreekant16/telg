@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <title>Educational Resources</title>-->
+    <style>
+        body {
+            text-align: center; /* Align text center */
+            font-family: Arial, sans-serif; /* Specify font family */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+<!--            background-color: #FFB6C1;-->
+        }
+.navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+
+
+        h1 {
+            color: #ffb6c1; /* Pink header color */
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 80px; /* Adjust the margin as needed */
+        }
+
+        .box {
+            width: 400px;
+            height: auto;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box:hover {
+            transform: translateY(-10px); /* Move box up on hover */
+        }
+
+        .box img {
+            width: 100%;
+            height: auto;
+        }
+
+        .box-info {
+            background-color: rgba(255, 255, 255, 0); /* Semi-transparent white background */
+            padding: 10px;
+            box-sizing: border-box;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .box:hover .box-info {
+            transform: translateY(0);
+        }
+
+        .box-info p {
+            margin: 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .box-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!--<h1>Educational Resources</h1>-->
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'user_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+    <div class="box-container">
+        <div class="box" style="display: flex; justify-content: center; align-items: center; background-color:#CBC3E3">
+            <a href="{% url 'poster1' %}"><img src="{% static 'images/ayd.png' %}" alt="Image" style="width: 200px; height: 200px;"></a>
+            <div class="box-info">
+                <p>See our Poster to get information about ayurveda</p>
+            </div>
+        </div>
+        <div class="box" style="display: flex; justify-content: center; align-items: center;background-color:#CBC3E3">
+            <a href="{% url 'poster2' %}"><img src="{% static 'images/crd.png' %}" alt="Image" style="width: 200px; height: 200px; "></a>
+            <div class="box-info">
+                <p>See our Poster to find remedied for cramps</p>
+            </div>
+        </div>
+        <div class="box" style="display: flex; justify-content: center; align-items: center; background-color:#CBC3E3">
+            <a href="{% url 'poster3' %}"><img src="{% static 'images/hfd.png' %}" alt="Image" style="width: 200px; height: 200px;"></a>
+            <div class="box-info">
+                <p>See our Poster to plan healthy diet</p>
+            </div>
+        </div>
+        <div class="box" style="display: flex; justify-content: center; align-items: center;background-color:#CBC3E3">
+            <a href="{% url 'poster4' %}"><img src="{% static 'images/excd.png' %}" alt="Image" style="width: 200px; height: 200px;"></a>
+            <div class="box-info">
+                <p>See our Poster to start you exercise during pregnancy</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

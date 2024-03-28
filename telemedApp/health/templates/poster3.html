@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Poster</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Use min-height instead of height for flexibility */
+            background-color: #f9f9f9; /* Light gray background */
+            font-family: Arial, sans-serif;
+        }
+
+        .poster-container {
+            position: relative;
+            width: 80%; /* Set maximum width */
+            max-width: 800px; /* Max width to avoid stretching on larger screens */
+            height: auto; /* Ensure image maintains aspect ratio */
+            overflow: hidden; /* Hide overflow */
+        }
+
+        .poster-image {
+            width: 100%; /* Ensure image fills container */
+            height: auto; /* Ensure image maintains aspect ratio */
+            display: block; /* Ensure block level display */
+            border-radius: 20px; /* Add curved border */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+            transition: opacity 0.5s ease; /* Smooth transition */
+        }
+
+        .swipe-button {
+            position: fixed;
+            bottom: 20px; /* Adjust button position */
+            right: 20px; /* Adjust button position */
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent blue color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        @media screen and (max-width: 768px) {
+            /* Adjustments for smaller screens */
+            .poster-container {
+                width: 90%; /* Increase width on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <img src="{% static 'images/diet.png' %}" alt="Poster 1" class="poster-image">
+        <img src="{% static 'images/fruit.png' %}" alt="Poster 2" class="poster-image" style="display: none;">
+    </div>
+    <button class="swipe-button" onclick="showNextPoster()"> > </button>
+
+    <script>
+        function showNextPoster() {
+            var currentPoster = document.querySelector('.poster-image:not([style*="display: none;"])');
+            var nextPoster = currentPoster.nextElementSibling || document.querySelector('.poster-image:first-child');
+
+            currentPoster.style.display = 'none';
+            nextPoster.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

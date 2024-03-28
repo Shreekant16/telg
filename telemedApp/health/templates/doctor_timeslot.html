@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Dashboard</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+
+  h1 {
+    text-align: center;
+    margin-top: 60px; /* Adjusted to accommodate navbar */
+  }
+
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 20px; /* Adjusted to accommodate navbar */
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #ffb6c1; /* Light pink background for buttons */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s; /* Smooth hover effect */
+  }
+
+  button:hover {
+    background-color: #f370a1; /* Darker pink on hover */
+  }
+  .box {
+    margin-top: 80px;
+    padding: 20px;
+    background-color: white; /* Pink background color */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+</style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'doctor_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+<div class="box">
+  <h1>Please Select time Slots</h1>
+<form action="{% url 'doctor_dashboard' %}" method="post">
+  {% csrf_token %}
+  <label for="time-slots">Select Time Slots For Tomorrow:</label><br>
+  <div id="time-slots">
+    <input type="checkbox" id="time-slot-1" name="1" value="1">
+    <label for="time-slot-1">10:00 AM - 10:30 AM</label><br>
+    <input type="checkbox" id="time-slot-2" name="2" value="2">
+    <label for="time-slot-2">10:30 AM - 11:00 AM</label><br>
+    <input type="checkbox" id="time-slot-3" name="3" value="3">
+    <label for="time-slot-3">11:00 AM - 11:30 AM</label><br>
+    <input type="checkbox" id="time-slot-4" name="4" value="4">
+    <label for="time-slot-4">11:30 AM - 12:00 PM</label><br>
+    <input type="checkbox" id="time-slot-5" name="5" value="5">
+    <label for="time-slot-5">12:00 PM - 12:30 PM</label><br>
+    <input type="checkbox" id="time-slot-6" name="6" value="6">
+    <label for="time-slot-6">12:30 PM - 01:00 PM</label><br>
+    <input type="checkbox" id="time-slot-7" name="7" value="7">
+    <label for="time-slot-7">01:00 PM - 01:30 PM</label><br>
+    <input type="checkbox" id="time-slot-8" name="8" value="8">
+    <label for="time-slot-8">01:30 PM - 02:00 PM</label><br>
+    <input type="checkbox" id="time-slot-9" name="9" value="9">
+    <label for="time-slot-9">02:00 PM - 02:30 PM</label><br>
+    <input type="checkbox" id="time-slot-10" name="10" value="10">
+    <label for="time-slot-10">02:30 PM - 03:00 PM</label><br>
+    <input type="checkbox" id="time-slot-11" name="11" value="11">
+    <label for="time-slot-11">03:00 PM - 03:30 PM</label><br>
+    <input type="checkbox" id="time-slot-12" name="12" value="12">
+    <label for="time-slot-12">03:30 PM - 04:00 PM</label><br>
+    <input type="checkbox" id="time-slot-13" name="13" value="13">
+    <label for="time-slot-13">04:00 PM - 04:30 PM</label><br>
+    <input type="checkbox" id="time-slot-14" name="14" value="14">
+    <label for="time-slot-14">04:30 PM - 05:00 PM</label><br>
+  </div>
+  <br>
+  <button type="submit" style="background-color: #6A0DAD;">Submit</button>
+</form>
+</div>
+
+</body>
+</html>

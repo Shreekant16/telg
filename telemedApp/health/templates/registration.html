@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Very light background for better readability */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .registration-box {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #CBC3E3; /* Background color */
+        }
+        h2 {
+            text-align: center;
+            color: #333; /* Black color for heading */
+            font-family: Arial, sans-serif; /* Ensure consistency */
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333; /* Black color for labels */
+            font-family: Arial, sans-serif; /* Ensure consistency */
+        }
+        select, input[type="text"], input[type="tel"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #6A0DAD; /* Purple background for button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #4B0082; /* Darker purple on hover */
+        }
+    </style>
+    <script>
+        function showFields() {
+            var userType = document.getElementById("userType").value;
+            var extraFields = document.getElementById("extraFields");
+
+            extraFields.innerHTML = "";
+
+            if (userType === "Doctor") {
+                extraFields.innerHTML += '<label for="name">Name:</label>';
+                extraFields.innerHTML += '<input type="text" id="name" name="name" placeholder="Dr.Rajiv Rai" required><br>';
+                extraFields.innerHTML += '<label for="regNo">Registration Number:</label>';
+                extraFields.innerHTML += '<input type="text" id="regNo" name="regNo" placeholder="SH162004" required><br>';
+                extraFields.innerHTML += '<label for="cityVillage">City/Village:</label>';
+                extraFields.innerHTML += '<input type="text" id="cityVillage" name="cityVillage" placeholder="Mumbai" required><br>';
+                extraFields.innerHTML += '<label for="taluka">Taluka:</label>';
+                extraFields.innerHTML += '<input type="text" id="taluka" name="taluka" placeholder="Panvel" required><br>';
+                extraFields.innerHTML += '<label for="state">State:</label>';
+                extraFields.innerHTML += '<input type="text" id="state" name="state" placeholder="Maharashtra" required><br>';
+                extraFields.innerHTML += '<label for="phone" >Phone Number:</label>';
+                extraFields.innerHTML += '<input type="tel" id="phone" name="phone" placeholder="+917738242916" required><br>';
+            } else if (userType === "User") {
+                extraFields.innerHTML += '<label for="username">Name:</label>';
+                extraFields.innerHTML += '<input type="text" id="username" name="name" placeholder="Rashi Shah" required><br>';
+                extraFields.innerHTML += '<label for="password">Password:</label>';
+                extraFields.innerHTML += '<input type="password" id="password" name="password" placeholder="Password" required><br>';
+                extraFields.innerHTML += '<label for="cityVillage">City/Village:</label>';
+                extraFields.innerHTML += '<input type="text" id="cityVillage" name="cityVillage" placeholder="Mumbai" required><br>';
+                extraFields.innerHTML += '<label for="taluka">Taluka:</label>';
+                extraFields.innerHTML += '<input type="text" id="taluka" name="taluka" placeholder="Panvel" required><br>';
+                extraFields.innerHTML += '<label for="state">State:</label>';
+                extraFields.innerHTML += '<input type="text" id="state" name="state" placeholder="Maharashtra" required><br>';
+                extraFields.innerHTML += '<label for="phone">Phone Number:</label>';
+                extraFields.innerHTML += '<input type="tel" id="phone" name="phone" placeholder="+917738242916" required><br>';
+            } else if (userType === "Asha Worker") {
+                extraFields.innerHTML += '<label for="name">Name:</label>';
+                extraFields.innerHTML += '<input type="text" id="name" name="name" placeholder="Janki Rai" required><br>';
+                extraFields.innerHTML += '<label for="password">Password:</label>';
+                extraFields.innerHTML += '<input type="password" id="password" name="password" placeholder="Password" required><br>';
+                extraFields.innerHTML += '<label for="cityVillage">City/Village:</label>';
+                extraFields.innerHTML += '<input type="text" id="cityVillage" name="cityVillage" placeholder="Mumbai" required><br>';
+                extraFields.innerHTML += '<label for="taluka">Taluka:</label>';
+                extraFields.innerHTML += '<input type="text" id="taluka" name="taluka" placeholder="Panvel" required><br>';
+                extraFields.innerHTML += '<label for="state">State:</label>';
+                extraFields.innerHTML += '<input type="text" id="state" name="state" placeholder="Maharashtra" required><br>';
+                extraFields.innerHTML += '<label for="phone">Phone Number:</label>';
+                extraFields.innerHTML += '<input type="tel" id="phone" name="phone" placeholder="+917738242916" required><br>';
+                extraFields.innerHTML += '<label for="link">Link:</label>';
+                extraFields.innerHTML += '<input type="text" id="link" name="link" placeholder="Google Meet Link" required><br>';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="registration-box">
+            <h2>Registration</h2>
+            {% if messages %}
+                {{ message.tags }}
+                    <div class="alert alert-primary" role="alert">
+                        {% for message in messages %}
+                            <ul class="messages">
+                                {{ message }}
+                            </ul>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            <form method="post" action="{% url 'registration' %}">
+                {% csrf_token %}
+                <label for="userType">Select User Type:</label>
+                <select id="userType" name="userType" onchange="showFields()" required>
+                    <option value="">Select</option>
+                    <option value="Doctor">Doctor</option>
+                    <option value="User">Patient</option>
+                    <option value="Asha Worker">Asha Worker</option>
+                </select><br><br>
+                <div id="extraFields"></div>
+                <input type="submit" value="Register">
+            </form>
+            <p align="center">Already Registered? <a href="{% url 'login_user' %}">Login</a></p>
+        </div>
+    </div>
+</body>
+</html>

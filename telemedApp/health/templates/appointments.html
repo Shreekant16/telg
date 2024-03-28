@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Appointments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 80px; /* Adjust the margin to prevent content from being hidden behind the navbar */
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .pending {
+            color: orange;
+        }
+
+        .booked {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'user_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+    <ul>
+        <li>Doctor : {{ data.7 }}</li>
+        <li>Asha Worker : {{ data.1 }}</li>
+        <li>Date : {{ data.8 }}</li>
+        {% if data.9 == '1' %}
+        <li>Slot : 10:00 to 10:30</li>
+        {% elif data.9 == '2' %}
+        <li>Slot : 10:30 to 11:00</li>
+        {% elif data.9 == '3' %}
+        <li>Slot : 11:00 to 11:30</li>
+        {% elif data.9 == '4' %}
+        <li>Slot : 11:30 to 12:00</li>
+        {% elif data.9 == '5' %}
+        <li>Slot : 12:00 to 12:30</li>
+        {% elif data.9 == '6' %}
+        <li>Slot : 12:30 to 01:00</li>
+        {% elif data.9 == '7' %}
+        <li>Slot : 01:00 to 01:30</li>
+        {% elif data.9 == '8' %}
+        <li>Slot : 01:30 to 02:00</li>
+        {% elif data.9 == '9' %}
+        <li>Slot : 02:00 to 02:30</li>
+        {% elif data.9 == '10' %}
+        <li>Slot : 02:30 to 03:00</li>
+        {% elif data.9 == '11' %}
+        <li>Slot : 03:00 to 03:30</li>
+        {% elif data.9 == '12' %}
+        <li>Slot : 03:30 to 04:00</li>
+        {% elif data.9 == '13' %}
+        <li>Slot : 04:00 to 04:30</li>
+        {% elif data.9 == '14' %}
+        <li>Slot : 04:30 to 05:00</li>
+        {% endif %}
+        {% if status == 'pending' %}
+            <li>Status : <a class="{{ status }}">{{ status }}</a></li>
+        {% endif %}
+        {% if status == 'booked' %}
+            <li>Status : <a class="{{ status }}">{{ status }}</a></li>
+            {% if link is not None %}
+                <li>Link : <a href="{{ link }}">Click here to join</a></li>
+            {% endif %}
+        {% endif %}
+
+    </ul>
+</body>
+</html>

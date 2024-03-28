@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menstrual Cycle Tracking</title>
+    <style>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+        .container {
+            max-width: 800px; /* Adjusted max-width for responsiveness */
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .navbar-buttons {
+            float: right;
+            margin-right: 20px;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            color: #ffb6c1;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #FF69B4;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+
+        }
+        .pink-link {
+            color: #ffb6c1;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                max-width: 90%; /* Adjusted max-width for smaller screens */
+            }
+        }
+
+        /* Added class for hiding and showing menu sections */
+        .hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .shown {
+            max-height: 1000px; /* Adjust this value based on your content */
+            overflow: hidden;
+            transition: max-height 0.3s ease-in;
+        }
+
+        .menu-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1s ease-out;
+        }
+
+        .menu-section.shown {
+            max-height: 1000px; /* Adjust this value based on your content */
+            overflow: hidden;
+            transition: max-height 2s ease-in;
+        }
+
+        .login-buttons a {
+            text-decoration: none;
+            color: #333; /* Adjust as needed for readability */
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f8f9fa; /* Very light gray for button background */
+            transition: background-color 0.3s;
+        }
+
+        .login-buttons a:hover {
+            background-color: #e9ecef; /* Light gray on hover */
+        }
+        .calendar-container {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .day-cell {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid transparent;
+        }
+
+        .day-label {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: lightcoral;
+        }
+
+        .highlight1 {
+            background-color: lightblue;
+        }
+
+        .highlight2 {
+            background-color: lightgreen;
+        }
+
+        .highlight3 {
+            background-color: lightyellow;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .dot {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .red-dot {
+            background-color: red;
+        }
+
+        .blue-dot {
+            background-color: blue;
+        }
+
+        .green-dot {
+            background-color: green;
+        }
+    </style>
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo" style="width: 100px; height: 60px;">
+
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'user_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <div class="box">
+        <!-- Calendar container -->
+        <div class="calendar-container" id="calendar-container"></div>
+
+        <!-- Button container -->
+        <div class="button-container">
+            <button id="prevBtn"><</button>
+            <button id="nextBtn">></button>
+        </div>
+
+        <!-- Colored dots for menstrual cycle phases -->
+        <div class="dot red-dot"></div>
+        <span>Menstrual Phase</span><br>
+
+        <div class="dot blue-dot"></div>
+        <span>Follicular Phase</span><br>
+
+        <div class="dot green-dot"></div>
+        <span>Ovulation Period</span><br>
+    </div>
+</div>
+
+
+<div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); width: 300px; margin: 0 auto;">
+    <button><a href="{% url 'period_history' %}" style="background-color: #f370a1; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; display: block; margin: 0 auto;">Period History</a>
+</button>
+    <br><br>
+
+    <form method="post" style="margin-bottom: 0;">
+        {% csrf_token %}
+        <input type="hidden" value="reset" name="reset">
+        <button type="submit" value="reset" name="reset" style="background-color: #f370a1; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; display: block; margin: 0 auto;">Reset</button>
+    </form>
+</div>
+
+<br>
+<div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); width: 300px; margin: 0 auto;">
+    <form method="post" style="margin-bottom: 0;">
+        {% csrf_token %}
+        <label style="font-weight: bold; display: block;">Menstrual Cycle Length :</label>
+        <input type="text" name="mcl" placeholder="Eg.30" style="margin-bottom: 10px; padding: 5px; width: calc(100% - 20px); box-sizing: border-box;">
+
+        <label style="font-weight: bold; display: block;">Period Length :</label>
+        <input type="text" name="pl" placeholder="Eg.7" style="margin-bottom: 10px; padding: 5px; width: calc(100% - 20px); box-sizing: border-box;">
+
+        <label style="font-weight: bold; display: block;">Period Start :</label>
+        <input type="text" name="ps" placeholder="YYYY-MM-DD" style="margin-bottom: 10px; padding: 5px; width: calc(100% - 20px); box-sizing: border-box;">
+
+        <button type="submit" style="background-color: #f370a1; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; display: block; margin: 0 auto;">Submit</button>
+    </form>
+</div>
+
+
+<script>
+
+    const calendarContainer = document.getElementById('calendar-container');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    // Sample dates to highlight
+    const datesToHighlight = [
+        {% for cycle in dates_json %}
+            { start: "{{ cycle.period_start }}", end: "{{ cycle.period_end }}" },
+        {% endfor %}
+    ];
+
+    const datesToHighlight1 = [
+        {% for cycle in dates_json %}
+            { start: "{{ cycle.follicular_Phase_start }}", end: "{{ cycle.follicular_Phase_end }}" },
+        {% endfor %}
+    ];
+
+    const datesToHighlight2 = [
+        {% for cycle in dates_json %}
+            { start: "{{ cycle.ovulatory_Phase_start }}", end: "{{ cycle.ovulatory_Phase_end }}" },
+        {% endfor %}
+    ];
+
+    const datesToHighlight3 = [
+        {% for cycle in dates_json %}
+            { start: "{{ cycle.luteal_Phase_start }}", end: "{{ cycle.luteal_Phase_end }}" },
+        {% endfor %}
+    ];
+
+    let currentYear = {{ current_year }};
+    let currentMonthIndex = 0;
+
+    function generateCalendar(year, monthIndex) {
+        const month = months[monthIndex];
+        const firstDay = new Date(year, monthIndex, 1).getDay();
+        const totalDays = new Date(year, monthIndex + 1, 0).getDate();
+        let calendarGridHTML = `<h2>${month}</h2><div class="calendar">`;
+
+        // Adding day labels
+        for (const day of daysOfWeek) {
+            calendarGridHTML += `<div class="day-cell day-label">${day}</div>`;
+        }
+
+        for (let i = 0; i < firstDay; i++) {
+            calendarGridHTML += '<div class="day-cell"></div>';
+        }
+
+        for (let day = 1; day <= totalDays; day++) {
+            const currentDate = new Date(year, monthIndex, day);
+            let isHighlighted = false;
+            let isHighlighted1 = false;
+            let isHighlighted2 = false;
+            let isHighlighted3 = false;
+
+            for (const { start, end } of datesToHighlight) {
+                const startDate = new Date(start);
+                const endDate = new Date(end);
+
+                if (currentDate >= startDate && currentDate <= endDate) {
+                    isHighlighted = true;
+                    if (day >= startDate.getDate() + 14 && day <= startDate.getDate() + 16) {
+                        isOvulation = true;
+                    }
+                    break;
+                }
+            }
+
+            for (const { start, end } of datesToHighlight1) {
+                const startDate = new Date(start);
+                const endDate = new Date(end);
+
+                if (currentDate >= startDate && currentDate <= endDate) {
+                    isHighlighted1 = true;
+                    break;
+                }
+            }
+
+            for (const { start, end } of datesToHighlight2) {
+                const startDate = new Date(start);
+                const endDate = new Date(end);
+
+                if (currentDate >= startDate && currentDate <= endDate) {
+                    isHighlighted2 = true;
+                    break;
+                }
+            }
+
+            for (const { start, end } of datesToHighlight3) {
+                const startDate = new Date(start);
+                const endDate = new Date(end);
+
+                if (currentDate >= startDate && currentDate <= endDate) {
+                    isHighlighted3 = true;
+                    break;
+                }
+            }
+
+            calendarGridHTML += `<div class="day-cell ${isHighlighted ? 'highlight' : ''} ${isHighlighted1 ? 'highlight1' : ''} ${isHighlighted2 ? 'highlight2' : ''} ${isHighlighted3 ? 'highlight3' : ''}">${day}</div>`;
+        }
+
+        calendarGridHTML += '</div>';
+        calendarContainer.innerHTML = calendarGridHTML;
+    }
+
+    function showNextMonth() {
+        if (currentMonthIndex < 11) {
+            currentMonthIndex++;
+        } else {
+            currentYear++;
+            currentMonthIndex = 0;
+        }
+        generateCalendar(currentYear, currentMonthIndex);
+    }
+
+    function showPrevMonth() {
+        if (currentMonthIndex > 0) {
+            currentMonthIndex--;
+        } else {
+            currentYear--;
+            currentMonthIndex = 11;
+        }
+        generateCalendar(currentYear, currentMonthIndex);
+    }
+
+    prevBtn.addEventListener('click', showPrevMonth);
+    nextBtn.addEventListener('click', showNextMonth);
+
+    generateCalendar(currentYear, currentMonthIndex); // Display initial calendar
+
+</script>
+</body>
+</html>

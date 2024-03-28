@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9; /* Light gray background */
+            position: relative;
+        }
+        .navbar {
+            background-color: #6A0DAD; /* Pink color for navbar */
+            padding: 5px; /* Reduced padding */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999; /* Ensure navbar stays on top */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #fff; /* White color for navbar links */
+            font-weight: bold;
+            padding: 5px 10px; /* Reduced padding */
+            border-radius: 5px;
+            background-color: #f370a1; /* Pink color for buttons */
+            transition: background-color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #FFB6C1; /* Darker pink on hover */
+        }
+
+        .website-logo {
+            width: 80px; /* Adjusted logo size */
+            height: auto;
+            margin-left: 50px;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            max-width: 1000px; /* Adjusted max-width */
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            background-color: #f370a1; /* Darker blue on hover */
+        }
+        button:hover {
+             background-color: #ffb6c1; /* Blue */
+        }
+        .dashboard {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-decoration: none;
+            color: #ffb6c1; /* Blue link color */
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'user_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+<br><br><br>
+    <h2>Health Information Form</h2>
+    <a href="{% url 'user_dashboard' %}" class="dashboard">Dashboard</a>
+    <form method="post">
+        {% csrf_token %}
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" name="weight" required><br><br>
+
+        <label for="height">Height:</label>
+        <input type="number" id="height" name="height" step="0.01" required><br><br>
+
+        <label for="problems">Problems:</label>
+        <select id="problems" name="problems">
+            <option value="">--Select--</option>
+            <option value="irregular menstrual cycles">Irregular menstrual cycles</option>
+            <option value="painful menstrual periods">Painful menstrual periods (dysmenorrhea)</option>
+            <option value="heavy menstrual bleeding">Heavy menstrual bleeding (menorrhagia)</option>
+            <option value="absent or missed periods">Absent or missed periods (amenorrhea)</option>
+            <option value="vaginal discharge">Vaginal discharge (color, odor, consistency changes)</option>
+            <option value="pelvic pain or discomfort">Pelvic pain or discomfort</option>
+            <option value="pain during sexual intercourse">Pain during sexual intercourse (dyspareunia)</option>
+            <option value="vaginal infections">Vaginal infections</option>
+            <option value="breast abnormalities">Breast abnormalities (lumps, nipple discharge)</option>
+            <option value="infertility">Infertility</option>
+            <option value="pregnancy-related concerns">Pregnancy-related concerns (morning sickness, gestational diabetes, etc.)</option>
+            <option value="postpartum issues">Postpartum issues (perineal tears, breastfeeding difficulties)</option>
+            <option value="blood clots in menstrual discharge">Blood clots in menstrual discharge</option>
+            <option value="premenstrual syndrome">Premenstrual Syndrome (PMS): I get extreme mood swings/bloating/breakouts before my periods</option>
+            <option value="vaginal dryness">Vaginal dryness</option>
+            <option value="pain during sex">Pain during sex</option>
+            <option value="painful intercourse after childbirth">Painful intercourse after childbirth</option>
+            <option value="early menopausal symptoms">Early menopausal symptoms</option>
+            <option value="menopausal symptoms">Menopausal symptoms</option>
+            <option value="vaginal itching or irritation">Vaginal itching or irritation</option>
+        </select><br><br>
+
+
+        <label for="additionalProblem">Additional Problem:</label>
+        <input type="text" id="additionalProblem" name="additionalProblem"><br><br>
+        <label for="additionalProblem">Time Slots (Tomorrow):</label>
+<select id="time_slots" name="slot">
+    <option value="none">--Select--</option>
+    {% for i in time_slots %}
+        <option value="{{ i }}" name="slot">
+            {% if i == 1 %}
+                10:00 to 10:30
+            {% elif i == 2 %}
+                10:30 to 11:00
+            {% elif i == 3 %}
+                11:00 to 11:30
+            {% elif i == 4 %}
+                11:30 to 12:00
+            {% elif i == 5 %}
+                12:00 to 12:30
+            {% elif i == 6 %}
+                12:30 to 01:00
+            {% elif i == 7 %}
+                01:00 to 01:30
+            {% elif i == 8 %}
+                01:30 to 02:00
+            {% elif i == 9 %}
+                02:00 to 02:30
+            {% elif i == 10 %}
+                02:30 to 03:00
+            {% elif i == 11 %}
+                03:00 to 03:30
+            {% elif i == 12 %}
+                03:30 to 04:00
+            {% elif i == 13 %}
+                04:00 to 04:30
+            {% elif i == 14 %}
+                04:30 to 05:00
+            {% endif %}
+        </option>
+    {% endfor %}
+</select><br><br>
+<label for="additionalProblem">Time Slots (Today):</label>
+<select id="time_slots1" name="slot1">
+    <option value="none">--Select--</option>
+    {% for i in time_slots1 %}
+        <option value="{{ i }}" name="slot1">
+            {% if i == 1 %}
+                10:00 to 10:30
+            {% elif i == 2 %}
+                10:30 to 11:00
+            {% elif i == 3 %}
+                11:00 to 11:30
+            {% elif i == 4 %}
+                11:30 to 12:00
+            {% elif i == 5 %}
+                12:00 to 12:30
+            {% elif i == 6 %}
+                12:30 to 01:00
+            {% elif i == 7 %}
+                01:00 to 01:30
+            {% elif i == 8 %}
+                01:30 to 02:00
+            {% elif i == 9 %}
+                02:00 to 02:30
+            {% elif i == 10 %}
+                02:30 to 03:00
+            {% elif i == 11 %}
+                03:00 to 03:30
+            {% elif i == 12 %}
+                03:30 to 04:00
+            {% elif i == 13 %}
+                04:00 to 04:30
+            {% elif i == 14 %}
+                04:30 to 05:00
+            {% endif %}
+        </option>
+    {% endfor %}
+</select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+<!--    <p>These are the time slots when doctors are available</p>-->
+<!--    {% for i in time_slots %}-->
+<!--        {% if i == 1 %}-->
+<!--            <p>10:00 to 10:30</p>-->
+<!--        {% elif i == 2 %}-->
+<!--            <p>10:30 to 11:00</p>-->
+<!--        {% elif i == 3 %}-->
+<!--            <p>11:00 to 11:30</p>-->
+<!--        {% elif i == 4 %}-->
+<!--            <p>11:30 to 12:00</p>-->
+<!--        {% elif i == 5 %}-->
+<!--            <p>12:00 to 12:30</p>-->
+<!--        {% elif i == 6 %}-->
+<!--            <p>12:30 to 01:00</p>-->
+<!--        {% elif i == 7 %}-->
+<!--            <p>01:00 to 01:30</p>-->
+<!--        {% elif i == 8 %}-->
+<!--            <p>01:30 to 02:00</p>-->
+<!--        {% elif i == 9 %}-->
+<!--            <p>02:00 to 02:30</p>-->
+<!--        {% elif i == 10 %}-->
+<!--            <p>02:30 to 03:00</p>-->
+<!--        {% elif i == 11 %}-->
+<!--            <p>03:00 to 03:30</p>-->
+<!--        {% elif i == 12 %}-->
+<!--            <p>03:30 to 04:00</p>-->
+<!--        {% elif i == 13 %}-->
+<!--            <p>04:00 to 04:30</p>-->
+<!--        {% elif i == 14 %}-->
+<!--            <p>04:30 to 05:00</p>-->
+<!--        {% endif %}-->
+<!--    {% endfor %}-->
+</body>
+</html>

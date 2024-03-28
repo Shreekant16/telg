@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Consultation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .navbar {
+            background-color: #6A0DAD; /* Pink color for navbar */
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999; /* Ensure navbar stays on top */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #fff; /* White color for navbar links */
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #f370a1; /* Darker pink on hover */
+
+            transition: background-color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #ffb6c1; /* Pink color for buttons */
+        }
+        .website-logo {
+            width: 60px;
+            height: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 80px; /* Adjust the margin to prevent content from being hidden behind the navbar */
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+        <ul class="navbar-buttons">
+            <li><a href="{% url 'user_dashboard' %}" class="login-buttons">Main Menu</a></li>
+        </ul>
+    </div>
+    <ul>
+        {% if link is not None %}
+        <li>Link : <a href="{{ link }}">Click here to join</a></li>
+        {% else %}
+        <li>No appointment's today</li>
+        {% endif %}
+    </ul>
+</body>
+</html>

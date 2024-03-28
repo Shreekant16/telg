@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asha Workers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+        background-color: #6A0DAD; /* Pink color for navbar */
+        padding: 5px; /* Reduced padding */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Ensure navbar stays on top */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+    .navbar ul li a {
+        text-decoration: none;
+        color: #fff; /* White color for navbar links */
+        font-weight: bold;
+        padding: 5px 10px; /* Reduced padding */
+        border-radius: 5px;
+        background-color: #f370a1; /* Pink color for buttons */
+        transition: background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        background-color: #FFB6C1; /* Darker pink on hover */
+    }
+    .website-logo {
+        width: 80px; /* Adjusted logo size */
+        height: auto;
+        margin-left: 50px;
+    }
+
+        .container {
+            max-width: 800px; /* Adjusted max-width for responsiveness */
+            margin: 80px auto 20px; /* Added margin to push content below navbar */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .asha-worker {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f2f2f2;
+        }
+
+        .asha-worker h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .asha-worker p {
+            margin: 5px 0;
+        }
+
+        .request-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+
+            background-color: #f370a1;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-decoration: none; /* Added text-decoration */
+        }
+
+        .request-button:hover {
+            background-color: #ffb6c1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <img src="{% static 'images/logotgg.png' %}" alt="Website Logo" class="website-logo">
+    <ul class="navbar-buttons">
+        <li><a href="{% url 'user_dashboard' %}" class="login-buttons">Main Menu</a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <h1>Asha Workers</h1>
+    {% if data %}
+    <ul class="asha-worker-list">
+        {% for worker in data %}
+        <li class="asha-worker">
+            <h2>{{ worker.0 }}</h2>
+            <p><strong>Name:</strong> {{ worker.0 }}</p>
+            <p><strong>Phone:</strong> {{ worker.4 }}</p>
+            <p><strong>Location:</strong> {{ worker.1 }}</p>
+            <br>
+            <a href="{% url 'user_request_ashaworker' %}?worker={{ worker.0 }}&phone={{ worker.4 }}" class="request-button">Request Appointment</a>
+        </li>
+        {% endfor %}
+    {% else %}
+        {% for worker in default_ashaworker %}
+        <li class="asha-worker">
+            <h2>{{ worker.0 }}</h2>
+            <p><strong>Name:</strong> {{ worker.0 }}</p>
+            <p><strong>Phone:</strong> {{ worker.4 }}</p>
+            <p><strong>Location:</strong> {{ worker.1 }}</p>
+            <br>
+            <a href="{% url 'user_request_ashaworker' %}?worker={{ worker.0 }}&phone={{ worker.4 }}" class="request-button">Request Appointment</a>
+        </li>
+        {% endfor %}
+    {% endif %}
+    </ul>
+</div>
+
+</body>
+</html>
